@@ -53,7 +53,7 @@ async function login(username, password) {
 const stockOf = async (token, branch, variantId) => (await call(token, 'GET', `/stock/variant/${variantId}`, null, branch)).data.find((b) => b.branchId === branch)?.current ?? 0;
 
 (async () => {
-  console.log(`\nMARC POS E2E against ${BASE}\n`);
+  console.log(`\nUnizova POS E2E against ${BASE}\n`);
   const admin = await login('admin', 'admin123');
   const A = admin.accessToken;
   const ngl = admin.branches.find((b) => b.code === 'NGL')._id;

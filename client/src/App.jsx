@@ -55,7 +55,7 @@ export default function App() {
   const { ready, user, bootstrap } = useAuth();
   const location = useLocation();
   useEffect(() => { bootstrap(); }, []);
-  if (!ready) return <div className="grid h-full place-items-center"><Loading label="Starting MARC…" /></div>;
+  if (!ready) return <div className="grid h-full place-items-center"><Loading label="Starting Unizova…" /></div>;
   if (!user) {
     return (
       <Routes>

@@ -250,8 +250,8 @@ export default function Layout() {
       <div className="relative z-30 shrink-0 bg-ink-900 dark:bg-ink-950 dark:ring-1 dark:ring-ink-800">
         <header className="flex h-14 items-center gap-3 px-4">
           <button type="button" className="rounded-lg p-2 text-ink-300 hover:bg-white/5 hover:text-white lg:hidden" onClick={() => setMobileNav(!mobileNav)} aria-label="Toggle menu">{mobileNav ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}</button>
-          <NavLink to="/" className="flex shrink-0 items-center" title={company?.name || 'MARC'}>
-            <img src="/logo.png" alt="MARC" className="h-7 w-auto" />
+          <NavLink to="/" className="flex shrink-0 items-center" title={company?.name || 'Unizova'}>
+            <img src="/unilogo-dark.png" alt="Unizova Technologies" className="h-7 w-auto" />
           </NavLink>
           <div className="ml-2 flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 py-1 pl-2.5 pr-1 text-white">
             <Store className="h-4 w-4 text-brand-400" />

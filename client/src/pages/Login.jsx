@@ -33,7 +33,7 @@ export default function Login() {
       <div className="relative hidden overflow-hidden bg-ink-900 p-12 text-white lg:flex lg:flex-col lg:justify-between">
         <div className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-brand-600/30 blur-3xl" />
         <div className="absolute -bottom-32 -left-16 h-96 w-96 rounded-full bg-violet-600/20 blur-3xl" />
-        <div className="relative"><img src="/logo.png" alt="MARC" className="h-10 w-auto" /></div>
+        <div className="relative"><img src="/unilogo-dark.png" alt="Unizova Technologies" className="h-12 w-auto" /></div>
         <div className="relative max-w-md">
           <h1 className="text-4xl font-extrabold leading-tight">Billing, barcodes & inventory for every branch.</h1>
           <p className="mt-4 text-ink-300">Scan-fast POS, size/colour variants, GST invoices, returns & exchanges, branch transfers and real-time reports.</p>
@@ -43,11 +43,11 @@ export default function Login() {
             ))}
           </div>
         </div>
-        <div className="relative text-xs text-ink-500">© {new Date().getFullYear()} MARC</div>
+        <div className="relative text-xs text-ink-500">© {new Date().getFullYear()} Unizova Technologies</div>
       </div>
       <div className="flex items-center justify-center p-6">
         <form onSubmit={submit} className="w-full max-w-sm">
-          <div className="mb-8 lg:hidden"><div className="inline-flex rounded-xl bg-ink-900 px-4 py-2.5"><img src="/logo.png" alt="MARC" className="h-7 w-auto" /></div></div>
+          <div className="mb-8 lg:hidden"><div className="inline-flex rounded-xl bg-ink-900 px-4 py-2.5"><img src="/unilogo-dark.png" alt="Unizova Technologies" className="h-7 w-auto" /></div></div>
           <h2 className="text-2xl font-bold text-ink-900 dark:text-white">Sign in</h2>
           <p className="mt-1 text-sm text-ink-500">Use your store account to continue.</p>
           <div className="mt-6 space-y-4">

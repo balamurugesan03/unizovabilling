@@ -25,7 +25,7 @@ const settingsSchema = new Schema({
     defaultFormat: { type: String, enum: ['EAN13', 'CODE128'], default: 'EAN13' },
     ean13Prefix: { type: String, default: '890123' },
     code128Prefix: { type: String, default: 'FS' },
-    labelSize: { type: String, default: 'MARC-2up' },
+    labelSize: { type: String, default: 'STD-2up' },
     labelColumns: { type: Number, default: 1 },
     showStoreName: { type: Boolean, default: true },
     showProductName: { type: Boolean, default: true },

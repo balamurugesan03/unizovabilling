@@ -5,7 +5,7 @@ import { amountInWords, fdatetime, PAYMENT_LABELS } from './format';
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const m = (n) => (Number(n) || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const absUrl = (u) => (u && u.startsWith('/') ? `${window.location.origin}${u}` : u);
-const PRINT_LOGO = '/loginimage.jpeg';
+const PRINT_LOGO = '/unizova-logo.jpeg';
 const STORE_ADDRESS = 'Vellayani Jn, Trivandrum';
 const STORE_PHONE = '7907858891';
 const STORE_TAGLINE = 'the family fashion';
@@ -16,7 +16,7 @@ const branchPhone = (b) => b?.phone || STORE_PHONE;
 // discount as a percent of the sold value (returned lines left out), e.g. "10%" / "7.5%"; '' when there is no discount
 const pctText = (disc, base) => (Number(disc) > 0 && Number(base) > 0 ? `${Number(((disc / base) * 100).toFixed(2))}%` : '');
 const soldValue = (items) => items.filter((i) => i.qty > 0).reduce((a, i) => a + i.qty * (Number(i.rate) || 0), 0);
-const branchTitle = (branch, company) => branch?.displayName || branch?.name || company?.name || 'MARC';
+const branchTitle = (branch, company) => branch?.displayName || branch?.name || company?.name || 'Unizova';
 
 /** Prints an HTML document through a hidden iframe (the OS print dialog selects the printer). */
 export function printHtml(html, { title = 'Print' } = {}) {
@@ -251,8 +251,8 @@ export function a4InvoiceHtml(inv, { duplicate = false } = {}) {
 
 /* ---------------- Barcode labels ---------------- */
 export const LABEL_SIZES = {
-  'MARC-1up': { w: 38, h: 25, label: 'MARC design - 38 x 25 mm (1 across)', design: 'marc', cols: 1 },
-  'MARC-2up': { w: 38.5, h: 25, label: 'MARC design - 2 across (80 x 25 mm roll)', design: 'marc', cols: 2 },
+  'STD-1up': { w: 38, h: 25, label: 'Standard design - 38 x 25 mm (1 across)', design: 'std', cols: 1 },
+  'STD-2up': { w: 38.5, h: 25, label: 'Standard design - 2 across (80 x 25 mm roll)', design: 'std', cols: 2 },
   // accessories, 75 x 24 mm roll; slots = left edge of each sticker printed (mm)
   'ACC-LR': { w: 25, h: 24, label: 'Accessories - 3-column roll (3 x 25 mm): left + right only, centre blank', design: 'acc', slots: [0, 50] },
   'ACC-2up': { w: 37.5, h: 24, label: 'Accessories - 2 across on 75 x 24 mm (no gap)', design: 'acc', slots: [0, 37.5] },
@@ -271,10 +271,10 @@ export const LABEL_SIZES = {
  * SKU standing on the right edge, then MRP + item name, then Our Price.
  * Bars are 0.25 mm (2 printer dots) wide so every bar lands on whole dots and scans cleanly.
  */
-const MARC_PITCH = 41; // 2 across: mm from one label's left edge to the next
-const MARC_PAGE_W = 80; // 2 across roll; 1 across is one 38 mm label a page
-// maxW: room for the bars (MARC: 32.5 mm left of the SKU column); only very long codes shrink below 0.25 mm bars
-function marcBarcode(value, { maxW = 32.5, h = 6.9 } = {}) {
+const STD_PITCH = 41; // 2 across: mm from one label's left edge to the next
+const STD_PAGE_W = 80; // 2 across roll; 1 across is one 38 mm label a page
+// maxW: room for the bars (standard: 32.5 mm left of the SKU column); only very long codes shrink below 0.25 mm bars
+function stdBarcode(value, { maxW = 32.5, h = 6.9 } = {}) {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   JsBarcode(svg, String(value ?? ''), { format: 'CODE128', width: 1, height: 55, margin: 0, displayValue: false });
   const modules = parseFloat(svg.getAttribute('width')) || 100;
@@ -288,18 +288,18 @@ function marcBarcode(value, { maxW = 32.5, h = 6.9 } = {}) {
   return { html: svg.outerHTML, w };
 }
 
-function marcLabelsHtml(labels, { storeName = '', fields: f, cols = 2 }) {
+function stdLabelsHtml(labels, { storeName = '', fields: f, cols = 2 }) {
   const lw = cols === 1 ? 38 : 38.5; // label width
-  const pageW = cols === 1 ? 38 : MARC_PAGE_W;
+  const pageW = cols === 1 ? 38 : STD_PAGE_W;
   // store name: a little smaller on the 2-across roll; top keeps its baseline where the PRN has it
   const storeFs = cols === 1 ? 5.6 : 4.8;
   const storeTop = (6.63 - 0.895 * storeFs).toFixed(2);
   const flat = labels.flatMap((l) => Array.from({ length: l.qty }, () => l));
   const money = (n) => (Number(n) || 0).toFixed(2);
   const label = (l, i) => {
-    const bc = marcBarcode(l.barcode);
+    const bc = stdBarcode(l.barcode);
     const size = f.showSizeColor && l.size ? String(l.size) : '';
-    return `<div class="lbl" style="left:${i * MARC_PITCH}mm">
+    return `<div class="lbl" style="left:${i * STD_PITCH}mm">
       ${f.showStoreName && storeName ? `<div class="t store">${esc(storeName)}</div>` : ''}
       <div class="bc" style="left:${1.25 + (32.75 - bc.w) / 2}mm;width:${bc.w}mm">${bc.html}<div class="code">${esc(l.barcode)}</div></div>
       ${f.showSku && l.sku ? `<div class="sku" style="font-size:${Math.min(2.6, 13.5 / (String(l.sku).length * 0.62)).toFixed(2)}mm">${esc(l.sku)}</div>` : ''}
@@ -441,7 +441,7 @@ export function labelsHtml(labels, { size = '50x25', columns = 1, storeName = ''
   const s = LABEL_SIZES[size] || LABEL_SIZES['50x25'];
   if (s.design) {
     const f = { showStoreName: true, showProductName: true, showSku: true, showSizeColor: true, showMrp: true, showSellingPrice: true, ...fields };
-    return s.design === 'acc' ? accLabelsHtml(labels, { storeName, fields: f, slots: s.slots || [0], w: s.w }) : marcLabelsHtml(labels, { storeName, fields: f, cols: s.cols || 2 });
+    return s.design === 'acc' ? accLabelsHtml(labels, { storeName, fields: f, slots: s.slots || [0], w: s.w }) : stdLabelsHtml(labels, { storeName, fields: f, cols: s.cols || 2 });
   }
   const small = s.h < 24;
   const f = { showStoreName: true, showProductName: true, showSku: true, showSizeColor: true, showMrp: true, showSellingPrice: true, ...fields };

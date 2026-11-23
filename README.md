@@ -1,4 +1,4 @@
-# MARC — Multi-Branch Billing, Inventory & Barcode ERP
+# Unizova — Multi-Branch Billing, Inventory & Barcode ERP
 
 A production-ready retail system for fashion / garment stores with multiple branches:
 barcode-driven POS billing, size/colour variants, GST invoices, purchases, branch stock transfers,

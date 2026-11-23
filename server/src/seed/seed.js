@@ -38,7 +38,7 @@ async function main() {
   await M.Permission.insertMany(PERMISSIONS);
 
   const company = await M.Company.create({
-    name: 'MARC', legalName: 'MARC', logoUrl: '/logo-print.png', code: 'FSPL', gstin: '33AABCF1234K1Z5', pan: 'AABCF1234K',
+    name: 'Unizova', legalName: 'Unizova Technologies', logoUrl: '/unizova-logo.jpeg', code: 'FSPL', gstin: '33AABCF1234K1Z5', pan: 'AABCF1234K',
     email: 'accounts@fashionstore.in', phone: '04652-220011', website: 'www.fashionstore.in',
     address: { line1: '12, Main Road', line2: 'Vadasery', city: 'Nagercoil', state: 'Tamil Nadu', stateCode: '33', pincode: '629001' },
   });

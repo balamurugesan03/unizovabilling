@@ -71,7 +71,7 @@ function parseBackup(buffer) {
   } catch {
     throw ApiError.badRequest('Backup file is corrupted or not a valid backup');
   }
-  if (data.format !== 'fashion-pos-backup' || !data.collections) throw ApiError.badRequest('Not a MARC POS backup file');
+  if (data.format !== 'fashion-pos-backup' || !data.collections) throw ApiError.badRequest('Not a Unizova POS backup file');
   return data;
 }
 

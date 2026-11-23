@@ -27,7 +27,7 @@ async function start() {
   await syncPermissions();
   const server = http.createServer(app);
   socket.init(server);
-  server.listen(env.port, () => console.log(`[server] MARC POS API listening on http://localhost:${env.port} (${env.nodeEnv})`));
+  server.listen(env.port, () => console.log(`[server] Unizova POS API listening on http://localhost:${env.port} (${env.nodeEnv})`));
 
   const shutdown = async (sig) => {
     console.log(`[server] ${sig} received, shutting down`);
